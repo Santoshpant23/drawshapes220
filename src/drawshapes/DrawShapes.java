@@ -178,7 +178,7 @@ public class DrawShapes extends JFrame {
         loadItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Loading will delete current file, are you sure you want to load?");
+                JOptionPane.showMessageDialog(null, "Save this file before loading other file");
                 try {
                     System.out.println(e.getActionCommand());
                     JFileChooser jfc = new JFileChooser(".");
@@ -189,6 +189,10 @@ public class DrawShapes extends JFrame {
                         Scene copy = scene.copy();
                         undo.push(copy);
                         scene.loadShapes(selectedFile);
+                        // this is intentional, once a file is loaded, I am clearing all older history
+                        // of scenes
+                        undo.clear();
+                        redo.clear();
                         repaint();
                     }
                 } catch (Exception excep) {
@@ -219,6 +223,7 @@ public class DrawShapes extends JFrame {
                             out.println(str);
                             JOptionPane.showMessageDialog(null, "Saved");
                             scene.reload(new Scene());
+                            // this is intentional, once a scene is loaded, I am clearing it from screen
                             repaint();
                         } catch (IOException err) {
                             JOptionPane.showMessageDialog(null, err);

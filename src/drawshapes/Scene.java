@@ -218,7 +218,6 @@ public class Scene implements Iterable<IShape> {
         for (IShape shape : shapeList) {
             sc.addShape(shape.copy());
         }
-
         return sc;
     }
 
