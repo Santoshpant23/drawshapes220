@@ -217,6 +217,9 @@ public class DrawShapes extends JFrame {
                         System.out.println(str);
                         try (PrintWriter out = new PrintWriter(selectedFile)) {
                             out.println(str);
+                            JOptionPane.showMessageDialog(null, "Saved");
+                            scene.reload(new Scene());
+                            repaint();
                         } catch (IOException err) {
                             JOptionPane.showMessageDialog(null, err);
                         }
@@ -264,6 +267,7 @@ public class DrawShapes extends JFrame {
                 System.out.println(text);
                 // change the color instance variable to blue
                 color = Color.BLUE;
+                System.out.println(color);
             }
         });
 
@@ -276,6 +280,7 @@ public class DrawShapes extends JFrame {
                 System.out.println(text);
                 // change the color instance variable to blue
                 color = Color.GREEN;
+                System.out.println(color);
             }
         });
 
@@ -288,6 +293,7 @@ public class DrawShapes extends JFrame {
                 System.out.println(text);
                 // change the color instance variable to blue
                 color = Color.YELLOW;
+                System.out.println(color);
             }
         });
 
@@ -300,6 +306,7 @@ public class DrawShapes extends JFrame {
                 System.out.println(text);
                 // change the color instance variable to blue
                 color = Color.BLACK;
+                System.out.println(color);
             }
         });
 
@@ -312,6 +319,7 @@ public class DrawShapes extends JFrame {
                 System.out.println(text);
                 // change the color instance variable to blue
                 color = Color.CYAN;
+                System.out.println(color);
             }
         });
 
@@ -396,28 +404,32 @@ public class DrawShapes extends JFrame {
             public void keyTyped(KeyEvent e) {
                 // TODO: implement this method if you need it
                 char ch = e.getKeyChar();
-
+                // moveUp
                 if (ch == 'w') {
                     Scene copy = scene.copy();
                     undo.push(copy);
                     scene.move(0, -distance);
                 }
+                // moveDown
                 if (ch == 's') {
                     Scene copy = scene.copy();
                     undo.push(copy);
                     scene.move(0, distance);
                 }
+                // moveLeft
                 if (ch == 'a') {
                     Scene copy = scene.copy();
                     undo.push(copy);
                     scene.move(-distance, 0);
                 }
+                // moveRight
                 if (ch == 'd') {
                     Scene copy = scene.copy();
                     undo.push(copy);
                     scene.move(distance, 0);
                 }
 
+                // scaleUp
                 if (ch == 'u') {
                     Scene copy = scene.copy();
                     undo.push(copy);
@@ -427,7 +439,7 @@ public class DrawShapes extends JFrame {
                         }
                     }
                 }
-
+                // scaleDown
                 if (ch == 'l') {
                     Scene copy = scene.copy();
                     undo.push(copy);
@@ -437,7 +449,7 @@ public class DrawShapes extends JFrame {
                         }
                     }
                 }
-
+                // undo
                 if (ch == 'z') {
                     if (!undo.isEmpty()) {
                         Scene oldScene = undo.pop();
@@ -445,7 +457,7 @@ public class DrawShapes extends JFrame {
                         scene.reload(oldScene);
                     }
                 }
-
+                // redo
                 if (ch == 'y') {
                     if (!redo.isEmpty()) {
                         Scene newScene = redo.pop();
@@ -453,6 +465,80 @@ public class DrawShapes extends JFrame {
                         scene.reload(newScene);
 
                     }
+                }
+
+                // animate
+                if (ch == 'v') {
+                    Scene copy = scene.copy();
+                    undo.push(copy);
+                    for (IShape s : scene) {
+                        if (s.isSelected()) {
+                            final int totalTime = 10000; // 10 seconds
+                            final int interval = 300; // 500 milliseconds
+                            final int totalIterations = totalTime / interval;
+
+                            Thread timerThread = new Thread(() -> {
+                                boolean animationState = true;
+                                try {
+                                    for (int i = 0; i < totalIterations; i++) {
+                                        // Do something with the shape here
+                                        if (animationState) {
+                                            s.scaleUp();
+                                            animationState = false;
+                                        } else {
+                                            s.scaleDown();
+                                            animationState = true;
+                                        }
+                                        s.animate();
+                                        repaint();
+                                        Thread.sleep(interval);
+                                    }
+                                } catch (InterruptedException ex) {
+                                    ex.printStackTrace();
+                                }
+                            });
+                            timerThread.start();
+                        }
+                    }
+                }
+
+                // dance
+                if (ch == 'c') {
+                    Scene copy = scene.copy();
+                    undo.push(copy);
+                    for (IShape s : scene) {
+                        if (s.isSelected()) {
+                            final int totalTime = 5000; // 5 seconds
+                            final int interval = 100; // 100 milliseconds
+                            final int totalIterations = totalTime / interval;
+
+                            Thread danceThread = new Thread(() -> {
+                                try {
+                                    for (int i = 0; i < totalIterations; i++) {
+                                        // Random direction movement
+                                        int dx = (int) (Math.random() * 20) - 10;
+                                        int dy = (int) (Math.random() * 20) - 10;
+                                        s.move(dx, dy);
+
+                                        repaint();
+                                        Thread.sleep(interval);
+                                    }
+                                } catch (InterruptedException ex) {
+                                    ex.printStackTrace();
+                                }
+                            });
+                            danceThread.start();
+                        }
+                    }
+                }
+
+                // bring one selected forward in the layering
+                if (ch == 'f') {
+                    scene.bringForward();
+                }
+                // bring one selected backward in the layering
+                if (ch == 'b') {
+                    scene.sendBackward();
                 }
 
                 repaint();

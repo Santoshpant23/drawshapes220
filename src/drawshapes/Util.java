@@ -16,10 +16,19 @@ public class Util {
     }
 
     public static String colorToString(Color color) {
+        System.out.println("The color is " + color);
         if (color == Color.RED) {
             return "RED";
         } else if (color == Color.BLUE) {
             return "BLUE";
+        } else if (color == Color.BLACK) {
+            return "BLACK";
+        } else if (color == Color.YELLOW) {
+            return "YELLOW";
+        } else if (color == Color.CYAN) {
+            return "CYAN";
+        } else if (color == Color.GREEN) {
+            return "GREEN";
         }
         throw new UnsupportedOperationException("Unexpected color: " + color);
     }

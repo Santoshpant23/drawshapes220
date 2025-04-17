@@ -2,6 +2,7 @@ package drawshapes;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.util.Random;
 
 /**
  * Abstract shape class.
@@ -17,9 +18,17 @@ public abstract class AbstractShape implements IShape {
     protected boolean selected;
     protected Color color;
     protected Point anchorPoint;
+    protected String[] arr;
 
     protected AbstractShape(Point anchor) {
         this.anchorPoint = anchor;
+        arr = new String[6];
+        arr[0] = "BLUE";
+        arr[1] = "GREEN";
+        arr[2] = "YELLOW";
+        arr[3] = "RED";
+        arr[4] = "CYAN";
+        arr[5] = "BLACK";
     }
 
     protected void setBoundingBox(int left, int right, int top, int bottom) {
@@ -105,6 +114,7 @@ public abstract class AbstractShape implements IShape {
     }
 
     static String colorToString(Color color) {
+        System.out.println("The color is " + color);
         if (color == Color.RED) {
             return "RED";
         } else if (color == Color.BLUE) {
@@ -140,6 +150,18 @@ public abstract class AbstractShape implements IShape {
     @Override
     public IShape copy() {
         throw new UnsupportedOperationException();
+    }
+
+    // @Override
+    // public void animate() {
+    // throw new UnsupportedOperationException();
+    // }
+
+    @Override
+    public void animate() {
+        Random rand = new Random();
+        int colorIndex = rand.nextInt(6); // Generates random number from 0 to 5
+        this.color = Util.stringToColor(arr[colorIndex]);
     }
 
 }

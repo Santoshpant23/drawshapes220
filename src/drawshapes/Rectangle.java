@@ -72,8 +72,8 @@ public class Rectangle extends AbstractShape {
 
     @Override
     public void scaleDown() {
-        height = (int) (height * 0.75);
-        width = (int) (width * 0.75);
+        height = (int) (height * 0.80);
+        width = (int) (width * 0.80);
         setBoundingBox(anchorPoint.x - width / 2, anchorPoint.x + width / 2, anchorPoint.y - height / 2,
                 anchorPoint.y + height / 2);
     }

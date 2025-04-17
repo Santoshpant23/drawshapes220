@@ -148,6 +148,7 @@ public class Scene implements Iterable<IShape> {
 
     @Override
     public String toString() {
+        System.out.println("I am inside toString of Scene ");
         String shapeText = "";
         for (IShape s : shapeList) {
             shapeText += s.toString() + "\n";
@@ -223,6 +224,32 @@ public class Scene implements Iterable<IShape> {
 
     public void reload(Scene otherScene) {
         this.shapeList = otherScene.shapeList;
+    }
+
+    public void bringForward() {
+        for (int i = shapeList.size() - 2; i >= 0; i--) {
+            IShape current = shapeList.get(i);
+            if (current.isSelected()) {
+                // Swap with shape in front of it
+                IShape next = shapeList.get(i + 1);
+                shapeList.set(i + 1, current);
+                shapeList.set(i, next);
+                break;
+            }
+        }
+    }
+
+    public void sendBackward() {
+        for (int i = 1; i < shapeList.size(); i++) {
+            IShape current = shapeList.get(i);
+            if (current.isSelected()) {
+                // Swap with shape behind it
+                IShape prev = shapeList.get(i - 1);
+                shapeList.set(i - 1, current);
+                shapeList.set(i, prev);
+                break;
+            }
+        }
     }
 
 }

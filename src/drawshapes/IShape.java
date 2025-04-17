@@ -91,4 +91,6 @@ public interface IShape
     public void scaleDown();
 
     public IShape copy();
+
+    public void animate();
 }
