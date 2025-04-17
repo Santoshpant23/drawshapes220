@@ -83,4 +83,12 @@ public class Rectangle extends AbstractShape {
         return new Rectangle(new Point(anchorPoint.x, anchorPoint.y), width, height, color);
     }
 
+    public Point gePoint() {
+        return anchorPoint;
+    }
+
+    public int getLength() {
+        return (height + width) / 2;
+    }
+
 }

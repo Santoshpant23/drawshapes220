@@ -93,4 +93,6 @@ public interface IShape
     public IShape copy();
 
     public void animate();
+
+    public int getLength();
 }

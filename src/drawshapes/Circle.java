@@ -69,11 +69,12 @@ public class Circle extends AbstractShape {
         return new Circle(color, new Point(anchorPoint.x, anchorPoint.y), diameter);
     }
 
-    // @Override
-    // public void animate(){
-    // Random rand = new Random();
-    // int colorIndex = rand.nextInt(6); // Generates random number from 0 to 5
-    // this.color = Color.decode(arr[colorIndex]);
-    // }
+    public Point getPoint() {
+        return anchorPoint;
+    }
+
+    public int getLength() {
+        return diameter;
+    }
 
 }

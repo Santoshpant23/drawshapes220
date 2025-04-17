@@ -251,4 +251,11 @@ public class Scene implements Iterable<IShape> {
         }
     }
 
+    public void replaceShape(IShape curr, IShape newShape) {
+        int index = shapeList.indexOf(curr);
+        if (index != -1) {
+            shapeList.set(index, newShape);
+        }
+    }
+
 }

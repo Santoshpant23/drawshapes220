@@ -508,7 +508,7 @@ public class DrawShapes extends JFrame {
                 }
 
                 // dance
-                if (ch == 'c') {
+                if (ch == 'n') {
                     Scene copy = scene.copy();
                     undo.push(copy);
                     for (IShape s : scene) {
@@ -546,9 +546,42 @@ public class DrawShapes extends JFrame {
                     scene.sendBackward();
                 }
 
+                // change shape on the spot
+                if (ch == 'c') {
+                    for (IShape s : scene) {
+                        if (s.isSelected()) {
+                            changeShape(s);
+                        }
+                    }
+                }
+
                 repaint();
             }
         });
+    }
+
+    public void changeShape(IShape shape) {
+        if (shape instanceof Square) {
+            // Convert to Circle
+            Circle newShape = new Circle(shape.getColor(), shape.getAnchorPoint(), shape.getLength());
+            newShape.setSelected(true);
+            scene.replaceShape(shape, newShape);
+        } else if (shape instanceof Circle) {
+            // Convert to Rectangle
+            Circle circle = (Circle) shape;
+            Rectangle newShape = new Rectangle(shape.getAnchorPoint(), (int) (circle.getLength() * 0.75),
+                    (int) (circle.getLength() * 1.5),
+                    shape.getColor());
+            newShape.setSelected(true);
+            scene.replaceShape(shape, newShape);
+        } else if (shape instanceof Rectangle) {
+            // Convert to Square
+            Rectangle rect = (Rectangle) shape;
+            Square newShape = new Square(shape.getColor(), shape.getAnchorPoint().x, shape.getAnchorPoint().y,
+                    shape.getLength());
+            newShape.setSelected(true);
+            scene.replaceShape(shape, newShape);
+        }
     }
 
     /**
