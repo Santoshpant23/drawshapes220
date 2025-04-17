@@ -84,4 +84,11 @@ public interface IShape
      * @return
      */
     public BoundingBox getBoundingBox();
+
+    public void move(int x, int y);
+
+    public void scaleUp();
+    public void scaleDown();
+
+    public IShape copy();
 }

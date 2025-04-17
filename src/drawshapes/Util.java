@@ -10,10 +10,10 @@ import java.awt.Color;
  * This class contains static utility methods. It doesn't
  * make sene to create instances of this class.
  */
-public class Util
-{
+public class Util {
     // private constructor
-    private Util() {}
+    private Util() {
+    }
 
     public static String colorToString(Color color) {
         if (color == Color.RED) {
@@ -21,7 +21,7 @@ public class Util
         } else if (color == Color.BLUE) {
             return "BLUE";
         }
-        throw new UnsupportedOperationException("Unexpected color: "+color);
+        throw new UnsupportedOperationException("Unexpected color: " + color);
     }
 
     public static Color stringToColor(String color) {
@@ -29,7 +29,15 @@ public class Util
             return Color.RED;
         } else if (color.equals("BLUE")) {
             return Color.BLUE;
+        } else if (color.equals("GREEN")) {
+            return Color.GREEN;
+        } else if (color.equals("YELLOW")) {
+            return Color.YELLOW;
+        } else if (color.equals("BLACK")) {
+            return Color.BLACK;
+        } else if (color.equals("CYAN")) {
+            return Color.CYAN;
         }
-        throw new UnsupportedOperationException("Unexpected color: "+color);
+        throw new UnsupportedOperationException("Unexpected color: " + color);
     }
 }
